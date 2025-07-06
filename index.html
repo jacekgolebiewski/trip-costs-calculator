@@ -13,9 +13,12 @@
     <!-- Sekcja Osoby -->
     <section>
         <h2 class="text-2xl font-bold mb-3">Osoby</h2>
-        <div id="peopleList" class="mb-2 space-y-1"></div>
-        <button id="addPersonBtn" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 print:hidden">Dodaj osobę
-        </button>
+        <div class="max-w-sm bg-white p-4 rounded shadow mt-3">
+            <div id="peopleList" class="mb-2 space-y-1"></div>
+            <button id="addPersonBtn" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 print:hidden">
+                Dodaj osobę
+            </button>
+        </div>
     </section>
 
     <!-- Sekcja Wydatki -->
@@ -49,34 +52,36 @@
     <!-- Sekcja Tabela wydatków -->
     <section>
         <h2 class="text-2xl font-bold mb-3">Lista wydatków</h2>
-        <div id="expensesSummary"></div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm border-collapse border border-gray-300 bg-white">
-                <thead>
-                <tr class="bg-gray-100">
-                    <th class="border px-1 py-0.5 text-center">ID transakcji</th>
-                    <th class="border px-1 py-0.5">Kto kupił</th>
-                    <th class="border px-1 py-0.5">Kto się zrzuca</th>
-                    <th class="border px-1 py-0.5 text-right">Kwota</th>
-                    <th class="border px-1 py-0.5">Komentarz</th>
-                    <th class="border px-1 py-0.5 text-center print:hidden">Usuń</th>
-                </tr>
-                </thead>
-                <tbody id="expensesTableBody"></tbody>
-            </table>
+        <div class="bg-white p-4 rounded shadow mt-3">
+            <div id="expensesSummary"></div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm border-collapse border border-gray-300 bg-white">
+                    <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border px-1 py-0.5 text-center">ID transakcji</th>
+                        <th class="border px-1 py-0.5">Kto kupił</th>
+                        <th class="border px-1 py-0.5">Kto się zrzuca</th>
+                        <th class="border px-1 py-0.5 text-right">Kwota</th>
+                        <th class="border px-1 py-0.5">Komentarz</th>
+                        <th class="border px-1 py-0.5 text-center print:hidden">Usuń</th>
+                    </tr>
+                    </thead>
+                    <tbody id="expensesTableBody"></tbody>
+                </table>
+            </div>
         </div>
     </section>
 
     <!-- Sekcja Rozliczenie -->
     <section>
         <h2 class="text-2xl font-bold mb-3">Rozliczenie</h2>
-        <div id="settlementsDiv" class="flex flex-wrap gap-4"></div>
+        <div id="settlementsDiv"></div>
     </section>
 
     <!-- Sekcja Dodatkowe -->
     <section class="print:hidden">
         <h2 class="text-2xl font-bold mb-3">Dodatkowe</h2>
-        <div class="max-w-md bg-white p-4 rounded shadow mt-3">
+        <div class="max-w-sm bg-white p-4 rounded shadow mt-3">
 
             <h2 class="text-lg font-semibold mb-3 mt-3">Drukuj</h2>
             <button onclick="window.print()" class="bg-blue-600 text-white px-4 py-2 rounded">
@@ -320,7 +325,7 @@
 
         data.people.forEach(p => {
             const container = document.createElement('div');
-            container.className = 'mb-6 max-w-md bg-white rounded shadow p-3';
+            container.className = 'mb-6 bg-white rounded shadow p-3';
 
             const header = document.createElement('h3');
             header.className = 'font-semibold text-lg mb-2';
