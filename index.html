@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>Rozliczanie kosztów</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -14,7 +14,8 @@
     <section>
         <h2 class="text-2xl font-bold mb-3">Osoby</h2>
         <div id="peopleList" class="mb-2 space-y-1"></div>
-        <button id="addPersonBtn" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">Dodaj osobę</button>
+        <button id="addPersonBtn" class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">Dodaj osobę
+        </button>
     </section>
 
     <!-- Sekcja Wydatki -->
@@ -27,17 +28,21 @@
             </div>
             <div>
                 <p class="font-medium mb-1">Kto się zrzuca:</p>
-                <div id="participantsCheckboxes" class="max-h-40 overflow-auto border rounded p-2 space-y-1 bg-gray-50"></div>
+                <div id="participantsCheckboxes"
+                     class="max-h-40 overflow-auto border rounded p-2 space-y-1 bg-gray-50"></div>
             </div>
             <div>
                 <label for="amountInput" class="block mb-1 font-medium">Kwota:</label>
-                <input type="number" id="amountInput" min="0.01" step="0.01" required class="w-full border rounded px-2 py-1" />
+                <input type="number" id="amountInput" min="0.01" step="0.01" required
+                       class="w-full border rounded px-2 py-1"/>
             </div>
             <div>
                 <label for="commentInput" class="block mb-1 font-medium">Komentarz:</label>
-                <input type="text" id="commentInput" class="w-full border rounded px-2 py-1" />
+                <input type="text" id="commentInput" class="w-full border rounded px-2 py-1"/>
             </div>
-            <button type="submit" class="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 w-full">Dodaj wydatek</button>
+            <button type="submit" class="bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 w-full">Dodaj
+                wydatek
+            </button>
         </form>
     </section>
 
@@ -70,7 +75,8 @@
 
     <section class="max-w-md bg-white p-4 rounded shadow mt-6">
         <h2 class="text-lg font-semibold mb-3">Ustawienia</h2>
-        <p class="text-sm text-gray-700 mb-2">Kliknij przycisk, aby wyczyścić wszystkie dane lokalne (osoby, wydatki, rozliczenia).</p>
+        <p class="text-sm text-gray-700 mb-2">Kliknij przycisk, aby wyczyścić wszystkie dane lokalne (osoby, wydatki,
+            rozliczenia).</p>
         <button id="clearDataBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded">
             Wyczyść dane
         </button>
@@ -135,18 +141,18 @@
             div.appendChild(span);
 
             // if (data.people.length > 1) {
-                const btn = document.createElement('button');
-                btn.textContent = 'X';
-                btn.className = 'text-red-500 hover:text-red-700 font-bold px-2';
-                btn.addEventListener('click', () => {
-                    if (confirm(`Usunąć osobę "${p.name}"?`)) {
-                        data.people = data.people.filter(x => x.id !== p.id);
-                        // data.expenses = data.expenses.filter(exp => exp.payer !== p.id && !exp.participants.includes(p.id));
-                        saveData();
-                        renderAll();
-                    }
-                });
-                div.appendChild(btn);
+            const btn = document.createElement('button');
+            btn.textContent = 'X';
+            btn.className = 'text-red-500 hover:text-red-700 font-bold px-2';
+            btn.addEventListener('click', () => {
+                if (confirm(`Usunąć osobę "${p.name}"?`)) {
+                    data.people = data.people.filter(x => x.id !== p.id);
+                    // data.expenses = data.expenses.filter(exp => exp.payer !== p.id && !exp.participants.includes(p.id));
+                    saveData();
+                    renderAll();
+                }
+            });
+            div.appendChild(btn);
             // }
             peopleList.appendChild(div);
         });
@@ -159,7 +165,7 @@
         if (!trimmed) return alert('Imię nie może być puste');
         if (data.people.find(p => p.name.toLowerCase() === trimmed.toLowerCase())) return alert('Ta osoba już istnieje');
         const id = data.people.length ? data.people[data.people.length - 1].id + 1 : 1;
-        data.people.push({ id, name: trimmed });
+        data.people.push({id, name: trimmed});
         saveData();
         renderAll();
     });
@@ -211,8 +217,8 @@
         }
         const comment = commentInput.value.trim();
 
-        const id = data.expenses.length ? data.expenses[data.expenses.length - 1].id + 1 : 1;
-        data.expenses.push({
+        const id = data.expenses.length ? data.expenses[0].id + 1 : 1;
+        data.expenses.unshift({
             id,
             payer: payerId,
             participants: participantsIds,
@@ -227,8 +233,7 @@
     // --------- Expenses table ---------
     function renderExpenses() {
         expensesTableBody.innerHTML = '';
-        const sortedExpenses = [...data.expenses].sort((a, b) => b.id - a.id);
-        const totalExpenses = [...data.expenses].reduce((el, acc) => el.amount+acc.amount);
+        const totalExpenses = data.expenses.reduce((acc, el) => acc + el.amount, 0);
 
         expensesSummary.innerHTML = '';
         const span = document.createElement('span');
@@ -236,7 +241,7 @@
         span.textContent = 'Razem: ' + totalExpenses.toFixed(2);
         expensesSummary.appendChild(span);
 
-        sortedExpenses.forEach(exp => {
+        data.expenses.forEach(exp => {
             const tr = document.createElement('tr');
             tr.className = 'text-sm';
 
@@ -316,7 +321,7 @@
             const thead = document.createElement('thead');
             thead.innerHTML = `
       <tr class="bg-gray-100">
-        <th class="border px-1 py-0.5 text-center">LP</th>
+<!--        <th class="border px-1 py-0.5 text-center">LP</th>-->
         <th class="border px-1 py-0.5 text-center">ID transakcji</th>
         <th class="border px-1 py-0.5 text-center">Kto kupił</th>
         <th class="border px-1 py-0.5 text-center">Kto się zrzuca</th>
@@ -332,30 +337,30 @@
                 const payerName = data.people.find(p => p.id == exp.payer)?.name || '???';
                 const participantNames = exp.participants.map(pid => data.people.find(p => p.id == pid)?.name || '???').join(', ');
 
-                if (exp.payer === p.id) {
-                    lp++;
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-          <td class="border px-1 py-0.5 text-center">${lp}</td>
-          <td class="border px-1 py-0.5 text-center">${exp.id}</td>
-          <td class="border px-1 py-0.5 text-center">${payerName}</td>
-          <td class="border px-1 py-0.5 text-center">${participantNames}</td>
-          <td class="border px-1 py-0.5 text-right">${exp.amount.toFixed(2)}</td>
-          <td class="border px-1 py-0.5">Opłacono: #${exp.id} ${exp.comment}</td>
-        `;
-                    tbody.appendChild(tr);
-                }
                 if (exp.participants.includes(p.id)) {
                     lp++;
                     const share = exp.amount / exp.participants.length;
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-          <td class="border px-1 py-0.5 text-center">${lp}</td>
+<!--          <td class="border px-1 py-0.5 text-center">${lp}</td>-->
           <td class="border px-1 py-0.5 text-center">${exp.id}</td>
           <td class="border px-1 py-0.5 text-center">${payerName}</td>
           <td class="border px-1 py-0.5 text-center">${participantNames}</td>
           <td class="border px-1 py-0.5 text-right">-${share.toFixed(2)}</td>
           <td class="border px-1 py-0.5">Udział: #${exp.id} ${exp.comment}</td>
+        `;
+                    tbody.appendChild(tr);
+                }
+                if (exp.payer === p.id) {
+                    lp++;
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+<!--          <td class="border px-1 py-0.5 text-center">${lp}</td>-->
+          <td class="border px-1 py-0.5 text-center">${exp.id}</td>
+          <td class="border px-1 py-0.5 text-center">${payerName}</td>
+          <td class="border px-1 py-0.5 text-center">${participantNames}</td>
+          <td class="border px-1 py-0.5 text-right">${exp.amount.toFixed(2)}</td>
+          <td class="border px-1 py-0.5">Opłacono: #${exp.id} ${exp.comment}</td>
         `;
                     tbody.appendChild(tr);
                 }
